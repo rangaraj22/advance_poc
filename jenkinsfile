@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk 'jdk17'       // name must match Jenkins tool config
+        maven 'Maven-3.9.11	'    // name must match Jenkins tool config
+    }
+
+    parameters {
+        choice(name: 'ENV', choices: ['qa', 'dev', 'prod'], description: 'Select Environment')
+        choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'Select Browser')
+    }
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/your-repo/your-project.git'
+            }
+        }
+
+        stage('Build & Run Tests') {
+            steps {
+                bat """
+                mvn clean test ^
+                -Denv=${params.ENV} ^
+                -Dbrowser=${params.BROWSER}
+                """
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'target/surefire-reports/**', allowEmptyArchive: true
+        }
+    }
+}
