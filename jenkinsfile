@@ -7,7 +7,7 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'ENV', choices: ['QA, 'DEV', 'UAT'], description: 'Select Environment')
+        choice(name: 'ENV', choices: ['QA', 'DEV', 'UAT'], description: 'Select Environment')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'Select Browser')
     }
 
