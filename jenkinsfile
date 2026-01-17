@@ -59,7 +59,7 @@ pipeline {
                     <br/>
                     <p>📎 Please find attached report</p>
                 """,
-                mimeType: 'text/html'
+                mimeType: 'text/html',
  				//attachment             
                 attachmentsPattern: 'reports/*.html'
             )
