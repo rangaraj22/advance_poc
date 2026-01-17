@@ -39,7 +39,7 @@ pipeline {
             archiveArtifacts artifacts: 'target/surefire-reports/**', allowEmptyArchive: true
 
             emailext (
-                to: 'rangaraj.qa@gmail.com',
+                to: 'rangaraj.ck@gmail.com',
                 //from: 'rangaraj.qa@gmail.com',
                 subject: "BUILD ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
