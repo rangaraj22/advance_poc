@@ -40,7 +40,7 @@ pipeline {
 
             emailext (
                 to: 'rangaraj.qa@gmail.com',
-                from: 'rangaraj.qa@gmail.com',
+                //from: 'rangaraj.qa@gmail.com',
                 subject: "BUILD ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
                     Build Result: ${currentBuild.currentResult}<br/>
