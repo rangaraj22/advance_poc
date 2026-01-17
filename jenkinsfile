@@ -39,25 +39,20 @@ pipeline {
             archiveArtifacts artifacts: 'target/surefire-reports/**', allowEmptyArchive: true
 
             emailext (
-                to: 'rangaraj.ck@gmail.com',
+                to: 'leelacse1010@gmail.com',
                  replyTo: 'rangaraj.qa@gmail.com',
                 //from: 'rangaraj.qa@gmail.com',
                 subject: "BUILD ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
                     <h3>Automation Execution Report</h3>
                     <p><b>Status:</b> ${currentBuild.currentResult}</p>
-                  	<p><b>Job:</b> ${env.JOB_NAME}</p>
-                    <p><b>Build:</b> ${env.BUILD_NUMBER}</p>
+                  	<p><b>Application:</b> ${env.JOB_NAME}</p>
+                  	<p><b>Environment: ${params.ENV}</p>
+                  	<p><b>Browser: ${params.BROWSER}</p>
+                    <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
                     <p><b>URL:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-        		      <br/>
-                    Build Result: ${currentBuild.currentResult}<br/>
-                    Job: ${env.JOB_NAME}<br/>
-                    Build: ${env.BUILD_NUMBER}<br/>
-                    Environment: ${params.ENV}<br/>
-                    Browser: ${params.BROWSER}<br/>
-                    URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>
-                    <br/>
-                    <p>📎 Please find attached report</p>
+        		      <br/>                                                    
+                    <p> Please find attached report</p>
                 """,
                 mimeType: 'text/html',
  				//attachment             
