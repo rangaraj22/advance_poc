@@ -43,5 +43,35 @@ pipeline {
             archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'target/surefire-reports/**', allowEmptyArchive: true
         }
+        
+        //Email congifuration
+         success {
+        emailext (
+            subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
+                <h3>Build SUCCESS</h3>
+                <p>Job: ${env.JOB_NAME}</p>
+                <p>Build: ${env.BUILD_NUMBER}</p>
+                <p>URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+            """,
+            mimeType: 'text/html',
+            to: 'rangaraj.qa@gmail.com'
+        )
+    }
+
+    failure {
+        emailext (
+            subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
+                <h3>Build FAILED</h3>
+                <p>Job: ${env.JOB_NAME}</p>
+                <p>Build: ${env.BUILD_NUMBER}</p>
+                <p>URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+            """,
+            mimeType: 'text/html',
+            to: 'rangaraj.qa@gmail.com'
+        )
+    }
+        
     }
 }
