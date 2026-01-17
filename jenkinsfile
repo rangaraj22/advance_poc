@@ -45,31 +45,35 @@ pipeline {
         }
         
         //Email congifuration
+       
+       
          success {
         emailext (
-            subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: """
-                <h3>Build SUCCESS</h3>
-                <p>Job: ${env.JOB_NAME}</p>
-                <p>Build: ${env.BUILD_NUMBER}</p>
-                <p>URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-            """,
-            mimeType: 'text/html',
-            to: 'rangaraj.qa@gmail.com'
+             to: 'rangaraj.qa@gmail.com',
+                from: 'rangaraj.qa@gmail.com',
+                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    Build SUCCESS<br/>
+                    Job: ${env.JOB_NAME}<br/>
+                    Build: ${env.BUILD_NUMBER}<br/>
+                    URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>
+                """,
+                mimeType: 'text/html'
         )
     }
 
     failure {
         emailext (
-            subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: """
-                <h3>Build FAILED</h3>
-                <p>Job: ${env.JOB_NAME}</p>
-                <p>Build: ${env.BUILD_NUMBER}</p>
-                <p>URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-            """,
-            mimeType: 'text/html',
-            to: 'rangaraj.qa@gmail.com'
+           to: 'rangaraj.qa@gmail.com',
+                from: 'rangaraj.qa@gmail.com',
+                subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    Build FAILED<br/>
+                    Job: ${env.JOB_NAME}<br/>
+                    Build: ${env.BUILD_NUMBER}<br/>
+                    URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>
+                """,
+                mimeType: 'text/html'
         )
     }
         
