@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        jdk 'jdk17'       // name must match Jenkins tool config
-        maven 'Maven-3.9.11'    // name must match Jenkins tool config
+        jdk 'jdk17'
+        maven 'Maven-3.9.11'
     }
 
     parameters {
@@ -15,9 +15,6 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                //git branch: 'main',
-                  //  url: 'https://github.com/your-repo/your-project.git'
-                   echo 'Checking out project from GitHub...'
                 checkout scm
             }
         }
@@ -35,63 +32,26 @@ pipeline {
 
     post {
         always {
-			
-			// Publish TestNG / Surefire results in jenkins UI
-      		junit 'target/surefire-reports/*.xml'
-			
-			//Archieve reports in jenkins, copy from workspace and store it in jenkins build
+
+            junit 'target/surefire-reports/*.xml'
+
             archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'target/surefire-reports/**', allowEmptyArchive: true
-        
-        
-        //Email congifuration
-         emailext (
-            to: 'rangaraj.qa@gmail.com',
-            from: 'rangaraj.qa@gmail.com',
-            subject: "BUILD ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: """
-                Build Result: ${currentBuild.currentResult}<br/>
-                Job: ${env.JOB_NAME}<br/>
-                Build: ${env.BUILD_NUMBER}<br/>
-                Environment: ${params.ENV}<br/>
-                Browser: ${params.BROWSER}<br/>
-                URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>
-            """,
-            mimeType: 'text/html'
-        )
-       
-       /*
-         success {
-        emailext (
-             to: 'rangaraj.qa@gmail.com',
-                from: 'rangaraj.qa@gmail.com',
-                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-                    Build SUCCESS<br/>
-                    Job: ${env.JOB_NAME}<br/>
-                    Build: ${env.BUILD_NUMBER}<br/>
-                    URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>
-                """,
-                mimeType: 'text/html'
-        )
-    }
 
-    failure {
-        emailext (
-           to: 'rangaraj.qa@gmail.com',
+            emailext (
+                to: 'rangaraj.qa@gmail.com',
                 from: 'rangaraj.qa@gmail.com',
-                subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                subject: "BUILD ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
-                    Build FAILED<br/>
+                    Build Result: ${currentBuild.currentResult}<br/>
                     Job: ${env.JOB_NAME}<br/>
                     Build: ${env.BUILD_NUMBER}<br/>
+                    Environment: ${params.ENV}<br/>
+                    Browser: ${params.BROWSER}<br/>
                     URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>
                 """,
                 mimeType: 'text/html'
-        )
-    }
-    */
-    }
-        
+            )
+        }
     }
 }
